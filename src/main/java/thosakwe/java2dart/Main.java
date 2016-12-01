@@ -1,12 +1,10 @@
 package thosakwe.java2dart;
 
-import com.github.javaparser.*;
 import org.apache.commons.cli.*;
-import org.apache.commons.cli.ParseException;
 import thosakwe.java2dart.codegen.dart.DartLibrary;
 import thosakwe.java2dart.transpiler.JavaToDartTranspiler;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.List;
 
 public class Main {
@@ -30,7 +28,10 @@ public class Main {
             String filename = rest.get(0);
             JavaToDartTranspiler transpiler = new JavaToDartTranspiler(commandLine, filename);
             DartLibrary library = transpiler.transpile(filename);
-            library.saveToFile();
+
+            if (commandLine.hasOption("out")) {
+                library.saveToFile(new File(commandLine.getOptionValue("out")));
+            } else library.saveToFile();
         } catch (ParseException e) {
             printUsage();
             System.exit(1);
