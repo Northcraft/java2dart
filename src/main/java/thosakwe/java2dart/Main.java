@@ -2,9 +2,11 @@ package thosakwe.java2dart;
 
 import org.apache.commons.cli.*;
 import thosakwe.java2dart.codegen.dart.DartLibrary;
+import thosakwe.java2dart.transpiler.JavaToDartLiteTranspiler;
 import thosakwe.java2dart.transpiler.JavaToDartTranspiler;
 
 import java.io.File;
+import java.io.PrintStream;
 import java.util.List;
 
 public class Main {
@@ -26,12 +28,24 @@ public class Main {
             }
 
             String filename = rest.get(0);
-            JavaToDartTranspiler transpiler = new JavaToDartTranspiler(commandLine, filename);
+            JavaToDartLiteTranspiler transpiler = new JavaToDartLiteTranspiler(commandLine, filename);
+            transpiler.visitCompilationUnit(Utils.parseCompilationUnit(new File(filename)));
+            String compiled = transpiler.getBuilder().toString();
+            PrintStream out;
+
+            if (commandLine.hasOption("out")) {
+                out = new PrintStream(commandLine.getOptionValue("out"));
+            } else out = System.out;
+
+            out.println(compiled);
+
+
+            /* JavaToDartTranspiler transpiler = new JavaToDartTranspiler(commandLine, filename);
             DartLibrary library = transpiler.transpile(filename);
 
             if (commandLine.hasOption("out")) {
                 library.saveToFile(new File(commandLine.getOptionValue("out")));
-            } else library.saveToFile();
+            } else library.saveToFile();*/
         } catch (ParseException e) {
             printUsage();
             System.exit(1);

@@ -3,7 +3,7 @@
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
     <option name="MAIN_CLASS_NAME" value="thosakwe.java2dart.Main" />
     <option name="VM_PARAMETERS" value="" />
-    <option name="PROGRAM_PARAMETERS" value="Main.java" />
+    <option name="PROGRAM_PARAMETERS" value="-o main.dart Main.java" />
     <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/example/hello" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
     <option name="ALTERNATIVE_JRE_PATH" />
